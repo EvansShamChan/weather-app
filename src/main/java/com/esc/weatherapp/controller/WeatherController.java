@@ -33,7 +33,6 @@ public class WeatherController {
         ModelAndView modelAndView = new ModelAndView();
         StatisticDto statistic = weatherService.getWeatherStatisticByCity(city, fromDate, toDate);
         List<WeatherDto> weatherInfo = weatherService.getWeatherInfo(city);
-        statistic.setCity(city);
         modelAndView.addObject("statistic", statistic);
         modelAndView.addObject("weatherInfo", weatherInfo);
         modelAndView.setViewName("statistic");

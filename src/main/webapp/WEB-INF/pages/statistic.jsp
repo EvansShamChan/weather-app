@@ -2,14 +2,21 @@
 <html>
 <head>
     <title>WeatherApp</title>
+    <style>
+        <%@include file="../css/styles.css"%>
+    </style>
 </head>
 <body>
-<h1>Statistic in ${statistic.city}</h1>
-<p>Minimum temperature: ${statistic.min}</p>
-<p>Maximum temperature: ${statistic.max}</p>
-<p>Average temperature: ${statistic.avg}</p>
+<div class="statistic" align="center">
+    <h1>Statistic in ${statistic.city}</h1>
+    <p>Minimum temperature: ${statistic.min} K</p>
+    <p>Maximum temperature: ${statistic.max} K</p>
+    <p>Average temperature: ${statistic.avg} K</p>
+</div>
+<hr>
+<h3 align="center">Full weather data in ${statistic.city}</h3>
 <c:if test="${weatherInfo != null}">
-    <table>
+    <table align="center">
         <tr>
             <th>Date</th>
             <th>Temperature</th>
