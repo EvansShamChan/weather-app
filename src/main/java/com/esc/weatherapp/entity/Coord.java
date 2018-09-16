@@ -6,20 +6,17 @@ import javax.persistence.*;
 
 @Data
 @Entity
-@Table(name = "weather")
-public class Weather {
+@Table(name = "coord")
+public class Coord {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false, updatable = false)
     private int id;
 
-    @Column(name = "main")
-    private String main;
+    @Column(name = "lon")
+    private double lon;
 
-    @Column(name = "description")
-    private String description;
-
-    @Column(name = "icon")
-    private String icon;
+    @Column(name = "lat")
+    private double lat;
 }

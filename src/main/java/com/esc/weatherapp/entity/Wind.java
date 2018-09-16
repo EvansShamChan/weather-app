@@ -6,17 +6,20 @@ import javax.persistence.*;
 
 @Data
 @Entity
-@Table(name = "name")
+@Table(name = "wind")
 public class Wind {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false, updatable = false)
-    private Long id;
+    private int id;
 
     @Column(name = "speed")
-    private Integer speed;
+    private int speed;
 
     @Column(name = "deg")
-    private Integer deg;
+    private int deg;
+
+    @Column(name = "gust")
+    private String gust;
 }
