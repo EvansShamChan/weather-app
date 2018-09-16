@@ -30,13 +30,7 @@ public class WeatherServiceImpl implements WeatherService {
     private String api_key;
 
     @Autowired
-    private UrlToOjectConverter urlToOjectConverter;
-
-    @Autowired
     private WeatherRepository weatherRepository;
-
-    @Autowired
-    private WeatherDtoConverter weatherDtoConverter;
 
     @Override
     public StatisticDto getWeatherStatisticByCity(String city, String fromDate, String toDate) {
@@ -53,6 +47,7 @@ public class WeatherServiceImpl implements WeatherService {
         Date newFromDate = StringToSqlDateConverter.getSqlDate(fromDate);
         Date newToDate = StringToSqlDateConverter.getSqlDate(toDate);
         StatisticDto statisticDto = new StatisticDto();
+        statisticDto.setCity(city);
         statisticDto.setMin(weatherRepository.getMinTempValue(city, newFromDate, newToDate));
         statisticDto.setMax(weatherRepository.getMaxTempValue(city, newFromDate, newToDate));
         statisticDto.setAvg(weatherRepository.getAvgTempValue(city, newFromDate, newToDate));
@@ -70,7 +65,7 @@ public class WeatherServiceImpl implements WeatherService {
 
     public List<WeatherDto> getWeatherInfo(String city) {
         List<WeatherDesc> allByName = weatherRepository.getAllByName(city);
-        List<WeatherDto> dto = allByName.stream().map(m -> weatherDtoConverter.convertToWeatherDto(m))
+        List<WeatherDto> dto = allByName.stream().map(m -> WeatherDtoConverter.convertToWeatherDto(m))
                 .collect(Collectors.toList());
         return dto;
     }
@@ -78,7 +73,7 @@ public class WeatherServiceImpl implements WeatherService {
     @Scheduled(fixedRate = 3600000) // 1 hour
     public void saveCurrentWeather() throws IOException {
         for (String city : cities) {
-            WeatherDesc objectByUrl = urlToOjectConverter.getObjectByUrl(new URL(String.format(URL, city, api_key)));
+            WeatherDesc objectByUrl = UrlToOjectConverter.getObjectByUrl(new URL(String.format(URL, city, api_key)));
             objectByUrl.setDate(new Date(System.currentTimeMillis()));
             weatherRepository.save(objectByUrl);
         }
