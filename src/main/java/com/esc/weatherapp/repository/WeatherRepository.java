@@ -7,6 +7,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.sql.Date;
+import java.util.List;
 
 @Repository
 public interface WeatherRepository extends JpaRepository<WeatherDesc, Long> {
@@ -37,4 +38,6 @@ public interface WeatherRepository extends JpaRepository<WeatherDesc, Long> {
             "where name = :city and weather_date >= current_date - interval '7 days' and weather_date <= current_date",
             nativeQuery = true)
     Integer getWeekAvgTempValue(@Param("city") String city);
+
+    List<WeatherDesc> getAllByName(String name);
 }
